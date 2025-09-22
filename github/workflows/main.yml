@@ -1,36 +1,21 @@
 name: E2E on Chrome
 
-on:
-  push:
-  pull_request:
+on: [push]
 
 jobs:
-  e2e:
+  install:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v3
         with:
+          project: ./site
           browser: chrome
-          build: pnpm build
-          start: pnpm start
+          build: yarn build
+          start: yarn start
           wait-on: "http://localhost:3000"
         env:
           COMMERCE_PROVIDER: ${{ secrets.COMMERCE_PROVIDER }}
