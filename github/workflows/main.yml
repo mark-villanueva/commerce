@@ -15,22 +15,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+          cache: yarn
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          build: pnpm build
-          start: pnpm start
+          build: yarn build
+          start: yarn start
           wait-on: "http://localhost:3000"
         env:
           COMMERCE_PROVIDER: ${{ secrets.COMMERCE_PROVIDER }}
