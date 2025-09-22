@@ -3,18 +3,16 @@ name: E2E on Chrome
 on: [push]
 
 jobs:
-  e2e:
+  install:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: yarn install
+        uses: actions/checkout@v2
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v3
         with:
+          project: ./site
           browser: chrome
           build: yarn build
           start: yarn start
